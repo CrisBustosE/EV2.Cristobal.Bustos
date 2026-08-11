@@ -5,3 +5,7 @@ node_modules
 /generated/prisma
 prisma/dev.db
 *.db
+.next/
+.agents/
+.claude/
+.windsurf/
