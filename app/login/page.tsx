@@ -37,6 +37,9 @@ export default function LoginPage() {
     <div className="ts-auth-wrapper">
       {/* Panel izquierdo — branding */}
       <div className="ts-auth-brand">
+        <a href="/" className="ts-back-link">
+          &larr; Volver al inicio
+        </a>
         <span className="ts-brand-badge">&#9679; Tech Solutions</span>
         <h1>Gestión de<br />Proyectos</h1>
         <p>Plataforma interna para el seguimiento, control y colaboración de proyectos empresariales.</p>

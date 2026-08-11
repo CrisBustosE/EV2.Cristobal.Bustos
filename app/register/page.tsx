@@ -36,8 +36,10 @@ export default function RegisterPage() {
 
   return (
     <div className="ts-auth-wrapper">
-      {/* Panel izquierdo — branding */}
       <div className="ts-auth-brand">
+        <a href="/" className="ts-back-link">
+          &larr; Volver al inicio
+        </a>
         <span className="ts-brand-badge">&#9679; Tech Solutions</span>
         <h1>Únete al<br />Equipo</h1>
         <p>Regístrate para acceder al panel de control y comenzar a gestionar los proyectos de la organización.</p>

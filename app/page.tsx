@@ -6,7 +6,7 @@ export default function Home() {
         <h1>Tech Solutions</h1>
         <p>Sistema de Gestión de Proyectos Avanzado.</p>
         
-        <div className="d-flex justify-content-center gap-3 mt-4">
+        <div className="d-flex flex-column flex-sm-row justify-content-center gap-3 mt-4">
           <a href="/login" className="ts-btn-white">
             Iniciar Sesión
           </a>

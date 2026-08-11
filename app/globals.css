@@ -12,11 +12,15 @@
   --ts-gray-500: #6b7a90;
   --ts-shadow:   0 20px 60px rgba(15, 32, 68, 0.18);
   --ts-radius:   14px;
+
+  /* Override Bootstrap font variables with Next.js Inter */
+  --bs-font-sans-serif: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --bs-body-font-family: var(--bs-font-sans-serif);
 }
 
 /* ── Base ── */
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-inter), sans-serif;
   background-color: var(--ts-gray-100);
   color: var(--ts-blue-900);
 }
@@ -65,7 +69,24 @@ body {
   text-transform: uppercase;
   margin-bottom: 2rem;
   width: fit-content;
-  color: rgba(255,255,255,0.9);
+}
+
+/* ── Back link ── */
+.ts-back-link {
+  align-self: flex-start;
+  width: fit-content;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  margin-bottom: 3rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.15s, transform 0.15s;
+}
+.ts-back-link:hover {
+  color: #ffffff;
+  transform: translateX(-4px);
 }
 
 /* ── Auth card (right panel) ── */
@@ -110,10 +131,11 @@ body {
 }
 
 .ts-form-label {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--ts-blue-700);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
+  display: block; /* Ensure it behaves like a block to push the input down */
 }
 
 /* ── Primary button ── */
@@ -237,10 +259,10 @@ body {
   color: var(--ts-white);
 }
 
-/* ── Responsive: colapsa split en móvil ── */
+/* ── Responsive adjustments ── */
 @media (max-width: 768px) {
-  .ts-auth-wrapper { flex-direction: column; }
-  .ts-auth-brand   { padding: 2.5rem 2rem 1.5rem; }
-  .ts-auth-brand h1 { font-size: 1.8rem; }
-  .ts-auth-panel   { width: 100%; min-width: unset; padding: 2rem 1.5rem; }
+  .ts-auth-wrapper { flex-direction: column; min-height: 100vh; }
+  .ts-auth-brand   { padding: 3rem 2rem 2rem; flex: none; text-align: center; align-items: center; }
+  .ts-auth-brand p { max-width: 100%; margin-bottom: 0; }
+  .ts-auth-panel   { width: 100%; min-width: unset; padding: 2.5rem 2rem; flex: 1; border-radius: 24px 24px 0 0; }
 }
