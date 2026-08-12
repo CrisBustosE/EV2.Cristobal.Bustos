@@ -4,6 +4,8 @@ Plataforma empresarial para el seguimiento, control y colaboración de proyectos
 
 ## Decisiones Tecnológicas y Stack
 
+La arquitectura del proyecto fue diseñada buscando un equilibrio entre los requerimientos de la evaluación y la adopción de tecnologías modernas de la industria. Parte de la elección de Next.js como framework full-stack y SQLite como motor de base de datos responde a un objetivo de aprendizaje personal profundo sobre estos ecosistemas, yendo más allá del cumplimiento estricto de la rúbrica.
+
 ### 1. Framework Base: Next.js 16 (App Router)
 Se utilizó **Next.js 16** con el App Router y Turbopack para garantizar el mayor rendimiento y estándares modernos. 
 - **Enrutamiento (File-based):** Se construyó una arquitectura separando claramente las vistas (`/login`, `/register`, `/proyectos`) de las rutas de API (`/api/auth/...`, `/api/proyectos/...`).
@@ -23,6 +25,14 @@ Se optó por **SQLite** (`dev.db` guardado dentro del directorio `/prisma/`) por
 ### 4. Estilos y UI
 - **Bootstrap 5:** Cargado de manera eficiente mediante CDN para sentar las bases de la UI.
 - **Design System Corporativo:** En `app/globals.css` se extendió Bootstrap mediante un sistema de variables CSS puro (esquema azul/gris). Todos los formularios interactivos cuentan con validación HTML5 nativa, modales en React puro sin requerir librerías de JS externas y un layout responsivo estilo "bottom-sheet" en teléfonos móviles.
+
+### 5. Alternativas Consideradas
+- **Next.js vs. Frameworks Tradicionales (Django / Laravel / Spring Boot):** Aunque opciones monolíticas tradicionales proveen soluciones robustas "out-of-the-box" (como autenticación y paneles de admin integrados), Next.js permite unificar el desarrollo del frontend reactivo y la API en un solo lenguaje (TypeScript) y repositorio. El motivo puntual de esta elección fue reducir el cambio de contexto mental y explotar las capacidades de renderizado unificado de React Server Components y las Server Actions de la versión 16.
+- **Prisma + SQLite vs. SQL Crudo o Micro-ORMs:** Mientras que escribir SQL crudo ofrece control absoluto sin sobrecarga, Prisma infiere un cliente fuertemente tipado directamente desde un esquema declarativo. La decisión puntual de preferirlo radica en garantizar "type-safety" en tiempo de compilación y maximizar la velocidad de construcción (DX) del CRUD, erradicando los posibles errores de ejecución derivados de consultas manuales mal construidas.
+
+### 6. Limitaciones Conocidas
+- **Escalabilidad de Escrituras y Concurrencia:** La implementación actual utiliza SQLite. Si bien es ideal para desarrollo y cumple holgadamente el contexto de la evaluación, su sistema basado en archivos bloquea la escritura simultánea. En un entorno de producción real a gran escala esto generaría cuellos de botella severos, por lo que el esquema debería migrarse a motores transaccionales modernos como PostgreSQL o MySQL.
+- **Despliegues Multi-Instancia y Entornos Serverless:** Mantener la base de datos acoplada como un archivo físico (`dev.db`) imposibilita desplegar horizontalmente la aplicación en proveedores Serverless efímeros (como AWS Lambda o Vercel), ya que los archivos locales se destruyen entre ejecuciones o se fragmentan entre instancias aisladas. Esto forzaría el despliegue en un VPS monolítico tradicional.
 
 ## Guía de Instalación
 
