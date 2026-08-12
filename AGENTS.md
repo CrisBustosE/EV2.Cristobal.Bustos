@@ -6,12 +6,12 @@ Este archivo contiene el contexto del proyecto, reglas de arquitectura y leccion
 - **Framework:** Next.js 16 (App Router, Turbopack).
 - **Base de Datos:** SQLite gestionado a través de Prisma ORM 7.
 - **Estilos:** Bootstrap 5 (vía CDN en `layout.tsx`) + CSS Personalizado en `app/globals.css`.
-- **Autenticación:** JWT (JSON Web Tokens) usando la librería `jose` (Web Crypto API, compatible con Edge Runtime). Hash de contraseñas con `argon2` (Argon2id).
+- **Autenticación:** JWT (JSON Web Tokens) usando la librería `jose`. Se eligió para mantener una única librería consistente y estandarizada (Web Crypto API/JOSE) tanto para firmar como verificar tokens, lo que mantiene el código portable en caso de necesitar ejecutarse en un entorno Edge puro en el futuro. Hash de contraseñas con `argon2` (Argon2id).
 
 ## 2. Decisiones Clave y Lecciones Aprendidas (Quirks)
 
-### Next.js 16 Proxy (Middleware)
-- **Deprecación:** Next.js 16 deprecó `middleware.ts` en favor de `proxy.ts`. Este archivo corre bajo Edge Runtime.
+### Next.js 16 Proxy (Reemplazo de Middleware)
+- **Runtime Node.js:** Next.js 16 deprecó `middleware.ts` en favor de `proxy.ts`. A diferencia del antiguo middleware que corría obligatoriamente en Edge, `proxy.ts` corre **exclusivamente en el runtime de Node.js**.
 - **Manejo de Redirecciones vs Fetch:** 
   - *Regla Crítica:* Para solicitudes no autenticadas, `proxy.ts` DEBE devolver una respuesta JSON `401 Unauthorized` si la ruta comienza con `/api/`, y un redirect `307` si es una ruta de página (ej. `/proyectos`). 
   - *Razón:* La API `fetch` del navegador sigue los redirects `307` por defecto. Si la API devuelve un redirect hacia `/login` (que es HTML), el cliente intentará parsearlo con `res.json()` y fallará con `SyntaxError: JSON.parse: unexpected character at line 1 column 1`.
