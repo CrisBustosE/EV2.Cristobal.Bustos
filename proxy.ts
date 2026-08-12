@@ -8,6 +8,9 @@ export async function proxy(request: NextRequest) {
   const token = request.cookies.get('token')?.value
 
   if (!token) {
+    if (request.nextUrl.pathname.startsWith('/api/')) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
@@ -17,6 +20,9 @@ export async function proxy(request: NextRequest) {
     requestHeaders.set('x-user-id', payload.sub as string)
     return NextResponse.next({ request: { headers: requestHeaders } })
   } catch {
+    if (request.nextUrl.pathname.startsWith('/api/')) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
     return NextResponse.redirect(new URL('/login', request.url))
   }
 }
