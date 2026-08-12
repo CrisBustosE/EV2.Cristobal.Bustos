@@ -1,15 +1,19 @@
 export default function Home() {
   return (
-    <main className="container mt-5">
-      <h1>Tech Solutions</h1>
-      <p className="lead">Sistema de Gestión de Proyectos</p>
-      <div className="mt-3">
-        <a href="/login" className="btn btn-primary me-2">
-          Iniciar Sesión
-        </a>
-        <a href="/register" className="btn btn-outline-secondary">
-          Registrarse
-        </a>
+    <main className="ts-hero">
+      <div className="ts-hero-card">
+        <span className="ts-brand-badge mb-3">&#9679; Enterprise Edition</span>
+        <h1>Tech Solutions</h1>
+        <p>Sistema de Gestión de Proyectos Avanzado.</p>
+        
+        <div className="d-flex flex-column flex-sm-row justify-content-center gap-3 mt-4">
+          <a href="/login" className="ts-btn-white">
+            Iniciar Sesión
+          </a>
+          <a href="/register" className="ts-btn-outline-white">
+            Registrarse
+          </a>
+        </div>
       </div>
     </main>
   );

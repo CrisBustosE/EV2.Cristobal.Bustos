@@ -1,0 +1,268 @@
+/* ── Tech Solutions — Corporate Design System ── */
+
+:root {
+  --ts-blue-900: #0f2044;
+  --ts-blue-700: #1a3a6e;
+  --ts-blue-500: #2563b0;
+  --ts-blue-400: #3b7dd8;
+  --ts-blue-50:  #eef4fc;
+  --ts-white:    #ffffff;
+  --ts-gray-100: #f5f7fa;
+  --ts-gray-300: #d1d9e0;
+  --ts-gray-500: #6b7a90;
+  --ts-shadow:   0 20px 60px rgba(15, 32, 68, 0.18);
+  --ts-radius:   14px;
+
+  /* Override Bootstrap font variables with Next.js Inter */
+  --bs-font-sans-serif: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --bs-body-font-family: var(--bs-font-sans-serif);
+}
+
+/* ── Base ── */
+body {
+  font-family: var(--font-inter), sans-serif;
+  background-color: var(--ts-gray-100);
+  color: var(--ts-blue-900);
+}
+
+/* ── Auth layout (login / register) ── */
+.ts-auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  background: linear-gradient(145deg, var(--ts-blue-900) 0%, var(--ts-blue-500) 100%);
+}
+
+.ts-auth-brand {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 4rem;
+  color: var(--ts-white);
+}
+
+.ts-auth-brand h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.ts-auth-brand p {
+  font-size: 1.05rem;
+  opacity: 0.75;
+  max-width: 320px;
+  line-height: 1.6;
+}
+
+.ts-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50px;
+  padding: 0.35rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  width: fit-content;
+}
+
+/* ── Back link ── */
+.ts-back-link {
+  align-self: flex-start;
+  width: fit-content;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  margin-bottom: 3rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.15s, transform 0.15s;
+}
+.ts-back-link:hover {
+  color: #ffffff;
+  transform: translateX(-4px);
+}
+
+/* ── Auth card (right panel) ── */
+.ts-auth-panel {
+  width: 460px;
+  min-width: 460px;
+  background: var(--ts-white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3.5rem 3rem;
+}
+
+.ts-auth-panel h2 {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--ts-blue-900);
+  margin-bottom: 0.35rem;
+}
+
+.ts-auth-panel .ts-subtitle {
+  font-size: 0.9rem;
+  color: var(--ts-gray-500);
+  margin-bottom: 2rem;
+}
+
+/* ── Form controls ── */
+.ts-form-control {
+  border: 1.5px solid var(--ts-gray-300);
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.95rem;
+  color: var(--ts-blue-900);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  background: var(--ts-white);
+}
+
+.ts-form-control:focus {
+  border-color: var(--ts-blue-400);
+  box-shadow: 0 0 0 3px rgba(37, 99, 176, 0.12);
+  outline: none;
+}
+
+.ts-form-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ts-blue-700);
+  margin-bottom: 0.5rem;
+  display: block; /* Ensure it behaves like a block to push the input down */
+}
+
+/* ── Primary button ── */
+.ts-btn-primary {
+  background: var(--ts-blue-700);
+  color: var(--ts-white);
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  width: 100%;
+  transition: background 0.15s, transform 0.1s;
+  cursor: pointer;
+}
+
+.ts-btn-primary:hover:not(:disabled) {
+  background: var(--ts-blue-900);
+  transform: translateY(-1px);
+}
+
+.ts-btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ── Divider ── */
+.ts-divider {
+  border: none;
+  border-top: 1.5px solid var(--ts-gray-300);
+  margin: 1.75rem 0;
+}
+
+/* ── Footer link ── */
+.ts-auth-footer {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--ts-gray-500);
+}
+
+.ts-auth-footer a {
+  color: var(--ts-blue-500);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ts-auth-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ── Home hero ── */
+.ts-hero {
+  min-height: 100vh;
+  background: linear-gradient(145deg, var(--ts-blue-900) 0%, var(--ts-blue-500) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--ts-white);
+  padding: 2rem;
+}
+
+.ts-hero-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--ts-radius);
+  padding: 3.5rem 3rem;
+  max-width: 540px;
+  width: 100%;
+  backdrop-filter: blur(6px);
+}
+
+.ts-hero h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.5px;
+}
+
+.ts-hero p {
+  font-size: 1.05rem;
+  opacity: 0.75;
+  margin-bottom: 2rem;
+}
+
+.ts-btn-white {
+  background: var(--ts-white);
+  color: var(--ts-blue-700);
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.6rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+  display: inline-block;
+}
+
+.ts-btn-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  color: var(--ts-blue-900);
+}
+
+.ts-btn-outline-white {
+  background: transparent;
+  color: var(--ts-white);
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 8px;
+  padding: 0.65rem 1.6rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+  display: inline-block;
+}
+
+.ts-btn-outline-white:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.8);
+  color: var(--ts-white);
+}
+
+/* ── Responsive adjustments ── */
+@media (max-width: 768px) {
+  .ts-auth-wrapper { flex-direction: column; min-height: 100vh; }
+  .ts-auth-brand   { padding: 3rem 2rem 2rem; flex: none; text-align: center; align-items: center; }
+  .ts-auth-brand p { max-width: 100%; margin-bottom: 0; }
+  .ts-auth-panel   { width: 100%; min-width: unset; padding: 2.5rem 2rem; flex: 1; border-radius: 24px 24px 0 0; }
+}
