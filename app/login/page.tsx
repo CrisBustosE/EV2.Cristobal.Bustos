@@ -50,7 +50,7 @@ export default function LoginPage() {
         <h2>Bienvenido</h2>
         <p className="ts-subtitle">Ingresa tus credenciales para continuar</p>
 
-        <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="correo" className="ts-form-label d-block">Correo electrónico</label>
             <input

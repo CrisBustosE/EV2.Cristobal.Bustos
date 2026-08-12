@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 
   const existing = await prisma.usuario.findUnique({ where: { correo } })
   if (existing) {
-    return Response.json({ error: 'Correo ya registrado' }, { status: 409 })
+    return Response.json({ error: 'Este correo ya se encuentra registrado.' }, { status: 409 })
   }
 
   const hash = await argon2.hash(clave, { type: argon2.argon2id })
