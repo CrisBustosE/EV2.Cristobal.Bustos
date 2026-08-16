@@ -206,7 +206,7 @@ export default function ProyectosPage() {
                       <div className="d-flex justify-content-between mb-2">
                         <span className="text-muted">Inicio</span>
                         <span className="fw-semibold" style={{ color: 'var(--ts-blue-700)' }}>
-                          {new Date(p.fecha_de_inicio).toLocaleDateString('es-ES')}
+                          {new Date(new Date(p.fecha_de_inicio).getTime() + Math.abs(new Date(p.fecha_de_inicio).getTimezoneOffset() * 60000)).toLocaleDateString('es-ES')}
                         </span>
                       </div>
                       <div className="d-flex justify-content-between">
