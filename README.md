@@ -60,3 +60,28 @@ Se optó por **SQLite** (`dev.db` guardado dentro del directorio `/prisma/`) por
    npm run dev
    ```
 El sistema estará disponible en `http://localhost:3000`.
+
+## Evidencia de Funcionamiento
+
+### Flujo completo (GIF)
+![Flujo de la aplicación](./docs/screenshots/flujo-completo.gif)
+
+*Login → creación de proyecto → modal editar/eliminar → cierre de sesión → intento de volver atrás, bloqueado y redirigido a /login por el proxy.*
+
+### 1. Conexión y configuración de la Base de Datos (modelos)
+![Tabla Proyecto en Prisma Studio](./docs/screenshots/modelo-proyecto.png)
+*Modelo Proyecto con todos los campos solicitados (nombre, fecha_de_inicio, estado, responsable, monto, created_by).*
+*Nótese la fila 2, que ilustra la decisión de diseño documentada arriba: `estado` y `fecha_de_inicio` no se validan entre sí.*
+
+El modelo Usuario y su estructura se pueden ver en la [sección 3](#3-cifrado-de-la-contraseña), junto con la evidencia del cifrado de la clave.
+
+### 2. Autenticación y autorización
+![Cookie JWT tras login exitoso](./docs/screenshots/login-exitoso.png)
+*Cookie `token` emitida tras un login válido, con los atributos `HttpOnly: true` y `SameSite: Lax` visibles en las DevTools.*
+
+![Acceso bloqueado sin sesión](./docs/screenshots/acceso-bloqueado.png)
+*Petición `GET /api/proyectos` sin cookie de sesión, respondida con `401 Unauthorized` por el proxy.*
+
+### 3. Cifrado de la contraseña
+![Clave hasheada con Argon2id](./docs/screenshots/clave-hasheada.png)
+*Campo `clave` almacenado como hash Argon2id (`$argon2id$v=19$...`), nunca en texto plano. También se aprecia la estructura completa del modelo Usuario.*
