@@ -24,6 +24,11 @@ export default function ProyectosPage() {
   const [formLoading, setFormLoading] = useState(false)
   const [formError, setFormError] = useState('')
 
+  const today = new Date()
+  const todayStr = today.toISOString().split('T')[0]
+  const minDate = new Date(today.getFullYear() - 40, today.getMonth(), today.getDate()).toISOString().split('T')[0]
+  const maxDate = new Date(today.getFullYear() + 10, today.getMonth(), today.getDate()).toISOString().split('T')[0]
+
   // Delete modal state
   const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean, projectId: number | null }>({
     isOpen: false,
@@ -266,7 +271,9 @@ export default function ProyectosPage() {
                         name="fecha_de_inicio" 
                         type="date" 
                         className="ts-form-control w-100" 
-                        defaultValue={currentProject?.fecha_de_inicio.split('T')[0]} 
+                        defaultValue={currentProject?.fecha_de_inicio.split('T')[0] || todayStr}
+                        min={minDate}
+                        max={maxDate} 
                         required 
                       />
                     </div>
