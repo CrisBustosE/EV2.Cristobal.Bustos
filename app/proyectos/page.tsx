@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import NotificationModal from '@/components/NotificationModal'
 
 type Proyecto = {
   id: number
@@ -22,6 +23,12 @@ export default function ProyectosPage() {
   const [currentProject, setCurrentProject] = useState<Proyecto | null>(null)
   const [formLoading, setFormLoading] = useState(false)
   const [formError, setFormError] = useState('')
+
+  // Delete modal state
+  const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean, projectId: number | null }>({
+    isOpen: false,
+    projectId: null
+  })
 
   useEffect(() => {
     fetchProyectos()
@@ -97,19 +104,25 @@ export default function ProyectosPage() {
     }
   }
 
-  async function handleDelete(id: number) {
-    if (!confirm('¿Estás seguro de que deseas eliminar este proyecto? Esta acción no se puede deshacer.')) return
+  async function handleDeleteConfirm() {
+    const id = deleteModal.projectId
+    if (id === null) return
 
     try {
       const res = await fetch(`/api/proyectos/${id}`, { method: 'DELETE' })
       if (res.ok) {
         setProyectos(prev => prev.filter(p => p.id !== id))
+        setDeleteModal({ isOpen: false, projectId: null })
       } else {
         alert('Error al eliminar el proyecto')
       }
     } catch (error) {
       console.error(error)
     }
+  }
+
+  function triggerDelete(id: number) {
+    setDeleteModal({ isOpen: true, projectId: id })
   }
 
   if (loading) {
@@ -201,7 +214,7 @@ export default function ProyectosPage() {
                       <button onClick={() => openModal(p)} className="btn btn-sm w-100" style={{ backgroundColor: 'var(--ts-blue-50)', color: 'var(--ts-blue-700)', fontWeight: 600 }}>
                         Editar
                       </button>
-                      <button onClick={() => handleDelete(p.id)} className="btn btn-sm w-100" style={{ color: '#b91c1c', backgroundColor: '#fff5f5', border: '1px solid #fecaca', fontWeight: 600 }}>
+                      <button onClick={() => triggerDelete(p.id)} className="btn btn-sm w-100" style={{ color: '#b91c1c', backgroundColor: '#fff5f5', border: '1px solid #fecaca', fontWeight: 600 }}>
                         Eliminar
                       </button>
                     </div>
@@ -308,6 +321,18 @@ export default function ProyectosPage() {
           </div>
         </div>
       )}
+
+      {/* ── Modal Confirm Delete ── */}
+      <NotificationModal 
+        isOpen={deleteModal.isOpen}
+        title="Eliminar Proyecto"
+        message="¿Estás seguro de que deseas eliminar este proyecto? Esta acción no se puede deshacer."
+        type="warning"
+        mode="confirm"
+        confirmText="Sí, Eliminar"
+        onClose={handleDeleteConfirm}
+        onCancel={() => setDeleteModal({ isOpen: false, projectId: null })}
+      />
     </div>
   )
 }
