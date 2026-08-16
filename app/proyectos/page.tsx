@@ -159,9 +159,11 @@ export default function ProyectosPage() {
             <h2 className="fw-bold mb-1" style={{ color: 'var(--ts-blue-900)' }}>Gestión de Proyectos</h2>
             <p className="text-muted mb-0">Administra los portafolios y su estado de ejecución.</p>
           </div>
-          <button onClick={() => openModal()} className="ts-btn-primary" style={{ width: 'fit-content' }}>
-            + Nuevo Proyecto
-          </button>
+          {proyectos.length > 0 && (
+            <button onClick={() => openModal()} className="ts-btn-primary" style={{ width: 'fit-content' }}>
+              + Nuevo Proyecto
+            </button>
+          )}
         </div>
 
         {proyectos.length === 0 ? (
