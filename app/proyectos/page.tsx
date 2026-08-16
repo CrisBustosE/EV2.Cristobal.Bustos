@@ -18,7 +18,7 @@ export default function ProyectosPage() {
   const [proyectos, setProyectos] = useState<Proyecto[]>([])
   const [loading, setLoading] = useState(true)
   
-  // Modal state
+  // Estado para coordinar la apertura/cierre del modal de creación/edición
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentProject, setCurrentProject] = useState<Proyecto | null>(null)
   const [formLoading, setFormLoading] = useState(false)
@@ -29,7 +29,7 @@ export default function ProyectosPage() {
   const minDate = new Date(today.getFullYear() - 40, today.getMonth(), today.getDate()).toISOString().split('T')[0]
   const maxDate = new Date(today.getFullYear() + 10, today.getMonth(), today.getDate()).toISOString().split('T')[0]
 
-  // Delete modal state
+  // Estado aislado para el modal de confirmación de eliminación (evita usar window.confirm bloqueante)
   const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean, projectId: number | null }>({
     isOpen: false,
     projectId: null
@@ -49,7 +49,7 @@ export default function ProyectosPage() {
         router.push('/login')
       }
     } catch (error) {
-      console.error('Error fetching proyectos:', error)
+      console.error('Error al obtener la lista de proyectos:', error)
     } finally {
       setLoading(false)
     }

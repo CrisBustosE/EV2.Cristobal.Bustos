@@ -18,6 +18,8 @@ export async function POST(request: Request) {
   }
 
   const usuario = await prisma.usuario.findUnique({ where: { correo } })
+  // Se utiliza un mensaje genérico ("Credenciales inválidas") tanto para correo inexistente
+  // como para clave incorrecta. Esto previene ataques de enumeración de usuarios.
   if (!usuario) {
     return Response.json({ error: 'Credenciales inválidas' }, { status: 401 })
   }
@@ -27,6 +29,7 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Credenciales inválidas' }, { status: 401 })
   }
 
+  // La firma del JWT con expiración de 24h minimiza la ventana de riesgo si el token es comprometido.
   const token = await new SignJWT({ sub: String(usuario.id), correo: usuario.correo })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
@@ -39,6 +42,8 @@ export async function POST(request: Request) {
     status: 200,
     headers: {
       'Content-Type': 'application/json',
+      // HttpOnly evita ataques XSS al hacer que el token sea inaccesible vía JavaScript del navegador.
+      // SameSite=Lax protege contra ataques de falsificación de petición (CSRF).
       'Set-Cookie': `token=${token}; HttpOnly; SameSite=Lax; Path=/; Max-Age=86400${isProd ? '; Secure' : ''}`,
     },
   })

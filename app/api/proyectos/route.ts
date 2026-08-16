@@ -39,6 +39,8 @@ export async function POST(request: NextRequest) {
       estado,
       responsable,
       monto,
+      // Asignamos el creador directamente desde el token JWT validado por el proxy,
+      // ignorando cualquier ID que el cliente intente enviar en el payload por seguridad.
       created_by: userId,
     },
   })

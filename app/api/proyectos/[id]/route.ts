@@ -3,6 +3,9 @@ import type { NextRequest } from 'next/server'
 
 type Params = { params: Promise<{ id: string }> }
 
+// Validación estricta de pertenencia (created_by === userId) en todas las operaciones CRUD.
+// Esto mitiga vulnerabilidades IDOR (Insecure Direct Object Reference) asegurando que
+// un usuario no pueda acceder, modificar o eliminar proyectos de terceros alterando la URL.
 async function getOwned(id: number, userId: number) {
   return prisma.proyecto.findFirst({ where: { id, created_by: userId } })
 }

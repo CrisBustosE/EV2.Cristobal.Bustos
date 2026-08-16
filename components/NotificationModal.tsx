@@ -25,12 +25,12 @@ export default function NotificationModal({
 }: NotificationModalProps) {
   const [show, setShow] = useState(false)
 
-  // Manejar animaciones de Bootstrap
+  // Sincroniza la visibilidad de React con la duración de la transición CSS nativa de Bootstrap
   useEffect(() => {
     if (isOpen) {
       setShow(true)
     } else {
-      setTimeout(() => setShow(false), 150) // Esperar fade out
+      setTimeout(() => setShow(false), 150) // 150ms equivale a la duración de la clase .fade en Bootstrap
     }
   }, [isOpen])
 
