@@ -128,7 +128,7 @@ export default function ProyectosPage() {
       <nav className="navbar px-4 py-3 shadow-sm" style={{ backgroundColor: 'var(--ts-blue-900)' }}>
         <div className="container-fluid d-flex justify-content-between align-items-center">
           <div className="d-flex align-items-center gap-2">
-            <span className="ts-brand-badge mb-0 border-0" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}>
+            <span className="ts-brand-badge mb-0" style={{ backgroundColor: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.35)', color: 'white' }}>
               &#9679; Tech Solutions
             </span>
             <span className="text-white fw-semibold d-none d-sm-inline ms-2">Workspace</span>

@@ -37,7 +37,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 3rem 4rem;
+  padding: 3rem 4rem 3rem clamp(4rem, 18%, 10rem);
   color: var(--ts-white);
 }
 
