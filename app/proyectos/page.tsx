@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import NotificationModal from '@/components/NotificationModal'
 
 type Proyecto = {
   id: number
@@ -22,6 +23,17 @@ export default function ProyectosPage() {
   const [currentProject, setCurrentProject] = useState<Proyecto | null>(null)
   const [formLoading, setFormLoading] = useState(false)
   const [formError, setFormError] = useState('')
+
+  const today = new Date()
+  const todayStr = today.toISOString().split('T')[0]
+  const minDate = new Date(today.getFullYear() - 40, today.getMonth(), today.getDate()).toISOString().split('T')[0]
+  const maxDate = new Date(today.getFullYear() + 10, today.getMonth(), today.getDate()).toISOString().split('T')[0]
+
+  // Delete modal state
+  const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean, projectId: number | null }>({
+    isOpen: false,
+    projectId: null
+  })
 
   useEffect(() => {
     fetchProyectos()
@@ -97,19 +109,25 @@ export default function ProyectosPage() {
     }
   }
 
-  async function handleDelete(id: number) {
-    if (!confirm('¿Estás seguro de que deseas eliminar este proyecto? Esta acción no se puede deshacer.')) return
+  async function handleDeleteConfirm() {
+    const id = deleteModal.projectId
+    if (id === null) return
 
     try {
       const res = await fetch(`/api/proyectos/${id}`, { method: 'DELETE' })
       if (res.ok) {
         setProyectos(prev => prev.filter(p => p.id !== id))
+        setDeleteModal({ isOpen: false, projectId: null })
       } else {
         alert('Error al eliminar el proyecto')
       }
     } catch (error) {
       console.error(error)
     }
+  }
+
+  function triggerDelete(id: number) {
+    setDeleteModal({ isOpen: true, projectId: id })
   }
 
   if (loading) {
@@ -128,7 +146,7 @@ export default function ProyectosPage() {
       <nav className="navbar px-4 py-3 shadow-sm" style={{ backgroundColor: 'var(--ts-blue-900)' }}>
         <div className="container-fluid d-flex justify-content-between align-items-center">
           <div className="d-flex align-items-center gap-2">
-            <span className="ts-brand-badge mb-0 border-0" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}>
+            <span className="ts-brand-badge mb-0" style={{ backgroundColor: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.35)', color: 'white' }}>
               &#9679; Tech Solutions
             </span>
             <span className="text-white fw-semibold d-none d-sm-inline ms-2">Workspace</span>
@@ -146,9 +164,11 @@ export default function ProyectosPage() {
             <h2 className="fw-bold mb-1" style={{ color: 'var(--ts-blue-900)' }}>Gestión de Proyectos</h2>
             <p className="text-muted mb-0">Administra los portafolios y su estado de ejecución.</p>
           </div>
-          <button onClick={() => openModal()} className="ts-btn-primary" style={{ width: 'fit-content' }}>
-            + Nuevo Proyecto
-          </button>
+          {proyectos.length > 0 && (
+            <button onClick={() => openModal()} className="ts-btn-primary" style={{ width: 'fit-content' }}>
+              + Nuevo Proyecto
+            </button>
+          )}
         </div>
 
         {proyectos.length === 0 ? (
@@ -201,7 +221,7 @@ export default function ProyectosPage() {
                       <button onClick={() => openModal(p)} className="btn btn-sm w-100" style={{ backgroundColor: 'var(--ts-blue-50)', color: 'var(--ts-blue-700)', fontWeight: 600 }}>
                         Editar
                       </button>
-                      <button onClick={() => handleDelete(p.id)} className="btn btn-sm btn-outline-danger w-100" style={{ fontWeight: 600 }}>
+                      <button onClick={() => triggerDelete(p.id)} className="btn btn-sm w-100" style={{ color: '#b91c1c', backgroundColor: '#fff5f5', border: '1px solid #fecaca', fontWeight: 600 }}>
                         Eliminar
                       </button>
                     </div>
@@ -251,7 +271,9 @@ export default function ProyectosPage() {
                         name="fecha_de_inicio" 
                         type="date" 
                         className="ts-form-control w-100" 
-                        defaultValue={currentProject?.fecha_de_inicio.split('T')[0]} 
+                        defaultValue={currentProject?.fecha_de_inicio.split('T')[0] || todayStr}
+                        min={minDate}
+                        max={maxDate} 
                         required 
                       />
                     </div>
@@ -308,6 +330,18 @@ export default function ProyectosPage() {
           </div>
         </div>
       )}
+
+      {/* ── Modal Confirm Delete ── */}
+      <NotificationModal 
+        isOpen={deleteModal.isOpen}
+        title="Eliminar Proyecto"
+        message="¿Estás seguro de que deseas eliminar este proyecto? Esta acción no se puede deshacer."
+        type="warning"
+        mode="confirm"
+        confirmText="Sí, Eliminar"
+        onClose={handleDeleteConfirm}
+        onCancel={() => setDeleteModal({ isOpen: false, projectId: null })}
+      />
     </div>
   )
 }

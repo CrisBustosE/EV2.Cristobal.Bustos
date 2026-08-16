@@ -37,7 +37,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 3rem 4rem;
+  padding: 3rem 4rem 3rem clamp(4rem, 18%, 10rem);
   color: var(--ts-white);
 }
 
@@ -265,4 +265,19 @@ body {
   .ts-auth-brand   { padding: 3rem 2rem 2rem; flex: none; text-align: center; align-items: center; }
   .ts-auth-brand p { max-width: 100%; margin-bottom: 0; }
   .ts-auth-panel   { width: 100%; min-width: unset; padding: 2.5rem 2rem; flex: 1; border-radius: 24px 24px 0 0; }
+}
+
+/* ── Mobile Navbar Animation ── */
+@media (max-width: 767.98px) {
+  .ts-mobile-collapse.collapse {
+    display: block !important;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease-in-out, opacity 0.25s ease-in-out;
+  }
+  .ts-mobile-collapse.collapse.show {
+    max-height: 350px;
+    opacity: 1;
+  }
 }
