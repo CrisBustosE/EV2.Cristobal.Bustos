@@ -201,7 +201,7 @@ export default function ProyectosPage() {
                       <button onClick={() => openModal(p)} className="btn btn-sm w-100" style={{ backgroundColor: 'var(--ts-blue-50)', color: 'var(--ts-blue-700)', fontWeight: 600 }}>
                         Editar
                       </button>
-                      <button onClick={() => handleDelete(p.id)} className="btn btn-sm btn-outline-danger w-100" style={{ fontWeight: 600 }}>
+                      <button onClick={() => handleDelete(p.id)} className="btn btn-sm w-100" style={{ color: '#b91c1c', backgroundColor: '#fff5f5', border: '1px solid #fecaca', fontWeight: 600 }}>
                         Eliminar
                       </button>
                     </div>
